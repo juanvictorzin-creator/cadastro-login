@@ -1,1 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cadastro e Login</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      padding: 20px;
+    }
+
+    .container {
+      display: flex;
+      gap: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 12px;
+      backdrop-filter: blur(8px);
+      width: 100%;
+      max-width: 900px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .form-box {
+      flex: 1 1 300px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .form-box h2 {
+      margin-bottom: 15px;
+      color: #333;
+    }
+
+    .form-box label {
+      display: block;
+      margin: 10px 0 5px;
+      font-size: 14px;
+    }
+
+    .form-box input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    .form-box button {
+      width: 100%;
+      padding: 10px;
+      background: #667eea;
+      border: none;
+      border-radius: 6px;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .form-box button:hover {
+      background: #5563c1;
+    }
+
+    /* Estilos da mensagem */
+    #mensagem-cadastro.success {
+      color: #27ae60;
+    }
+
+    #mensagem-cadastro.error {
+      color: #e74c3c;
+    }
+
+    #mensagem-cadastro {
+      margin-top: 10px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    /* Esconde a aba de login por padrão */
+    #aba-login {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Formulário de Cadastro -->
+    <div class="form-box" id="aba-cadastro">
+      <h2>Cadastro</h2>
+      <form id="form-cadastro">
+        <label for="nome">Nome</label>
+        <input type="text" id="nome" placeholder="Digite seu nome" required>
+
+        <label for="email-cad">E-mail</label>
+        <input type="email" id="email-cad" placeholder="Digite seu e-mail" required>
+
+        <label for="senha-cad">Senha</label>
+        <input type="password" id="senha-cad" placeholder="Digite sua senha" required>
+
+        <label for="senha2">Repita a senha</label>
+        <input type="password" id="senha2" placeholder="Repita sua senha" required>
+
+        <button type="submit">Cadastrar</button>
+
+        <!-- Mensagem visual -->
+        <p id="mensagem-cadastro"></p>
+      </form>
+    </div>
+
+    <!-- Formulário de Login -->
+    <div class="form-box" id="aba-login">
+      <h2>Login</h2>
+      <form id="form-login">
+        <label for="email-login">E-mail</label>
+        <input type="email" id="email-login" placeholder="Digite seu e-mail" required>
+
+        <label for="senha-login">Senha</label>
+        <input type="password" id="senha-login" placeholder="Digite sua senha" required>
+
+        <button type="submit">Entrar</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('form-cadastro');
+    const msg = document.getElementById('mensagem-cadastro');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const nome = document.getElementById('nome').value.trim();
+      const email = document.getElementById('email-cad').value.trim();
+      const senha = document.getElementById('senha-cad').value;
+      const senha2 = document.getElementById('senha2').value;
+
+      // Limpar mensagens anteriores
+      msg.textContent = '';
+      msg.className = '';
+
+      if (!nome || !email || !senha || !senha2) {
+        msg.textContent = "Preencha todos os campos.";
+        msg.className = "error";
+        return;
+      }
+
+      if (senha.length < 6) {
+        msg.textContent = "A senha deve ter ao menos 6 caracteres.";
+        msg.className = "error";
+        return;
+      }
+
+      if (senha !== senha2) {
+        msg.textContent = "As senhas não coincidem.";
+        msg.className = "error";
+        return;
+      }
+
+      // Exibir mensagem de sucesso
+      msg.textContent = "Cadastro concluído com sucesso!";
+      msg.className = "success";
+      form.reset();
+
+      // Após 1.5 segundos, mostrar a aba de login
+      setTimeout(() => {
+        document.getElementById('aba-cadastro').style.display = 'none';
+        document.getElementById('aba-login').style.display = 'block';
+      }, 1500);
+    });
+  </script>
+</body>
+</html>
 
